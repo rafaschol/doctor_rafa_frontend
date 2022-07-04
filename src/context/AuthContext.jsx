@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext } from "react"
 import { useNavigate } from "react-router-dom"
+import Loading from "../components/Loading"
 import * as authApi from "../api/auth"
 
 export const AuthContext = createContext()
@@ -92,7 +93,7 @@ const AuthProvider = ({ children }) => {
     }))
   }
 
-  if (initialLoading) return <p>Loading...</p>
+  if (initialLoading) return <Loading />
 
   return (
     <AuthContext.Provider

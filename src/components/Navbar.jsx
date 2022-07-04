@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
+import usePrivate from "../hooks/usePrivate"
 
 const Navbar = ({ links }) => {
   const { auth, logout } = useAuth()
+  const { resetSymptoms, resetDiagnostic } = usePrivate()
 
   return (
     <nav className="bg-white p-4 gap-4 flex items-center md:px-16 md:py-6 md:gap-10 shadow">
@@ -21,7 +23,11 @@ const Navbar = ({ links }) => {
         {`${auth.data.first_name} ${auth.data.last_name}`}
       </p>
       <button
-        onClick={logout}
+        onClick={() => {
+          resetSymptoms()
+          resetDiagnostic()
+          logout()
+        }}
         className="bg-sky-500 text-white py-2 px-4 rounded ml-auto md:ml-0"
       >
         Logout

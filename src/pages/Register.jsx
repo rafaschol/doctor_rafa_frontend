@@ -1,10 +1,11 @@
-import { useRef } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useRef } from "react"
+import { useNavigate, Link } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
+import Loading from "../components/Loading"
 import FormError from "../components/FormError"
 
 const Register = () => {
-  const { register, registerStatus } = useAuth()
+  const { auth, register, registerStatus } = useAuth()
 
   const passwordConfirmRef = useRef()
 
@@ -26,8 +27,16 @@ const Register = () => {
     register(values)
   }
 
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (auth.data !== null) navigate("/")
+  }, [])
+
   return (
-    <div className="bg-slate-100 min-h-screen flex justify-center items-center">
+    <div className="bg-slate-100 min-h-screen flex justify-center items-center relative">
+      {registerStatus.loading && <Loading />}
+
       <div className="bg-white p-8 shadow-md w-full m-4 md:w-[32rem] md:mx-0">
         <h2 className="text-center text-4xl font-bold mb-8">Register</h2>
         <form onSubmit={handleRegister} className="grid gap-6">
