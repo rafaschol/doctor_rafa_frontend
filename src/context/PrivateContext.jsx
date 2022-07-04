@@ -85,10 +85,10 @@ const PrivateProvider = ({ children }) => {
       setConfirmDiagnosisStatus({ success: false, error: null, loading: true })
 
       try {
-        await diagnosticsApi.confirmDiagnosis(diagnosis, authToken)
+        const data = await diagnosticsApi.confirmDiagnosis(diagnosis, authToken)
 
         // Update state
-        addDiagnosis(diagnosis)
+        addDiagnosis(data)
 
         setDiagnoseStatus({ success: true, error: null, loading: false })
       } catch (error) {

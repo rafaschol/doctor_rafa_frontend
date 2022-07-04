@@ -88,7 +88,7 @@ const AuthProvider = ({ children }) => {
       ...prev,
       data: {
         ...prev.data,
-        diagnostics: [...prev.data.diagnostics, diagnosis]
+        diagnostics: [diagnosis, ...prev.data.diagnostics]
       }
     }))
   }
