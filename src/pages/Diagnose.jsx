@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, useCallback } from "react"
+import debounce from "lodash.debounce"
 import { FaTimes as CloseIcon } from "react-icons/fa"
 import usePrivate from "../hooks/usePrivate"
 import Toast from "../components/Toast"
@@ -41,6 +42,11 @@ const Diagnose = () => {
 
   const handleConfirmDiagnosis = diagnosis => confirmDiagnosis(diagnosis)
 
+  const search = useCallback(
+    debounce(input => getSymptoms(input), 500),
+    []
+  )
+
   useEffect(() => {
     if (diagnoseStatus.error || confirmDiagnosisStatus.error) {
       setShowError(true)
@@ -61,7 +67,7 @@ const Diagnose = () => {
 
       <h2 className="text-4xl text-center">How are you feeling?</h2>
       <SymptomsInput
-        searchSymptoms={getSymptoms}
+        searchSymptoms={search}
         resetSymptoms={resetSymptoms}
         symptoms={getSymptomsStatus.data}
         addSymptom={handleAddSymptom}
